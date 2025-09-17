@@ -11,9 +11,6 @@ import (
 	"strings"
 )
 
-/*───────────────────────────────
-   PRODUCTION  CODE
-────────────────────────────────*/
 
 // StringToBinary converts the tokens `"true"` and `"false"` (case‑insensitive,
 // leading/trailing whitespace ignored) into `"1"` and `"0"` respectively.
@@ -50,7 +47,7 @@ func log1p(x float64) float64 {
 // using StringToBinary, and writes the result to outputFile.
 // It is optimised for large files: constant memory overhead and buffered I/O.
 func TransformLabelCSV(inputFile, outputFile string) error {
-	/* Open files --------------------------------------------------------- */
+	/* Open files  */
 	in, err := os.Open(inputFile)
 	if err != nil {
 		return fmt.Errorf("open input: %w", err)
@@ -74,7 +71,7 @@ func TransformLabelCSV(inputFile, outputFile string) error {
 	writer := csv.NewWriter(bw)
 	defer writer.Flush()
 
-	/* Locate columns ----------------------------------------------------- */
+	/* Locate columns  */
 	header, err := reader.Read()
 	if err != nil {
 		return fmt.Errorf("read header: %w", err)
@@ -98,7 +95,7 @@ func TransformLabelCSV(inputFile, outputFile string) error {
 		return fmt.Errorf("write header: %w", err)
 	}
 
-	/* Stream rows -------------------------------------------------------- */
+	/* Stream rows */
 	const flushEvery = 100_000
 	rowNum := 1 // header already counted
 
@@ -112,14 +109,14 @@ func TransformLabelCSV(inputFile, outputFile string) error {
 			return fmt.Errorf("read row %d: %w", rowNum, err)
 		}
 
-		// Translate label --------------------------------------------------
+		// Translate label 
 		bin, err := StringToBinary(row[labelIdx])
 		if err != nil {
 			return fmt.Errorf("row %d: %w", rowNum, err)
 		}
 		row[labelIdx] = bin
 
-		// (future‑proofed slot for true_duration_seconds) ------------------
+		// (future‑proofed slot for true_duration_seconds) 
 		if trueDurIdx != -1 { // currently impossible – see early guard
 			v, err := strconv.ParseFloat(row[trueDurIdx], 64)
 			if err != nil {
