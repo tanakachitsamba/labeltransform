@@ -7,9 +7,6 @@ import (
 	"testing"
 )
 
-/*───────────────────────────────
-           TESTS
-────────────────────────────────*/
 
 // -------- Unit tests for StringToBinary --------
 func TestStringToBinary(t *testing.T) {
@@ -158,7 +155,7 @@ func TestStringToBinary(t *testing.T) {
 	}
 }
 
-/* Helper functions for CSV integration tests -------------------------- */
+/* Helper functions for CSV integration tests  */
 
 func writeTempCSV(t *testing.T, content [][]string) string {
 	f, err := os.CreateTemp("", "test_input_*.csv")
@@ -194,7 +191,7 @@ func readCSVAll(t *testing.T, path string) [][]string {
 	return all
 }
 
-/* Integration tests for TransformLabelCSV ----------------------------- */
+/* Integration tests for TransformLabelCSV  */
 
 func TestTransformLabelCSV(t *testing.T) {
 	cases := []struct {
